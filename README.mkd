@@ -1,0 +1,6 @@
+Kinect Head Pose Estimator
+==========================
+
+This code is originally from a paper published by [Gabriele Fanelli][paper].
+
+[paper]: http://www.vision.ee.ethz.ch/~gfanelli/head_pose/head_forest.html
