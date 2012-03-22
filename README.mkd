@@ -27,3 +27,76 @@ http://tirokartblog.wordpress.com/2011/06/22/kinect-driver-and-samples-installat
 To run the demo, type ./head_pose_estimation_demo config.txt
 
 13.10.2011: removed bug in CRForestEStimator::estimate (thanks to Cristobal Belles)
+
+## Installation in Ubuntu 11.10
+
+Install the dependencies that are available in the central repository:
+
+    $ sudo apt-get install cmake freeglut3-dev libusb-1.0-0-dev build-essential
+
+### OpenCV
+
+Add a [PPA](https://launchpad.net/~gijzelaar/+archive/opencv2.3) required to
+get OpenCV 2.3 (only 2.1 is available in the central repository):
+
+    $ sudo add-apt-repository ppa:gijzelaar/cuda
+    $ sudo add-apt-repository ppa:gijzelaar/opencv2.3
+    $ sudo apt-get update
+    $ sudo apt-get install libcv-dev
+
+### OpenNI
+
+Download the unstable OpenNI binary OpenNI Unstable Build for Ubuntu 10.10 x64
+(or x86 if you're using a 32-bit OS)
+[v1.5.2.23](http://www.openni.org/Downloads/OpenNIModules.aspx).
+
+Extract the `.tar.bz2` file that you've downloaded and install it:
+
+    $ tar -xjf openni-bin-dev-linux-x64-v1.5.2.23.tar.bz2
+    $ cd OpenNI-Bin-Dev-Linux-x64-v1.5.2.23/
+    $ sudo ./install.sh
+
+### OpenNI SensorKinect
+
+Clone and install the Kinect sensor module for OpenNI:
+
+    $ git clone https://github.com/avin2/SensorKinect.git
+    $ cd SensorKinect/Bin
+    $ tar -xjf SensorKinect091-Bin-Linux64-v5.1.0.25.tar.bz2
+    $ cd Sensor-Bin-Linux-x64-v5.1.0.25
+    $ sudo ./install.sh
+
+### USB Device Setup
+
+Block the Kinect webcam driver that's new in the 3.0 Linux kernel from loading
+by adding this to the end of `/etc/modprobe.d/blacklist.conf`:
+
+    blacklist gspca_kinect
+
+Fix USB permissions by copying the file
+`SensorKinect/Platform/Linux/Install/55-primesense-usb.rules` to
+`/etc/udev/rules.d`. Finally, restart udev and plug in the Kinect:
+
+    $ sudo /etc/init.d/udev restart
+
+## Compiling
+
+Back in the head-post-estimator directory, generate the Makefile and run the
+first example:
+
+    $ cmake .
+    $ make
+    $ ./head_pose_estimation config.txt data/frame_00100_depth.bin
+    ...this should print out the head it detected in the data
+
+Next, compile and test the live Kinect example:
+
+    $ cd demo
+    $ cmake .
+    $ make
+    $ cd ..
+    $ ./head_post_estimation_demo config.txt
+
+At this point, a window should pop up showing the live depth view from the
+Kinect and a head pose estimation.
+
