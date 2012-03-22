@@ -1,0 +1,2 @@
+13.10.2011: removed bug in CRForestEStimator::estimate (thanks to Cristobal
+        Belles)
