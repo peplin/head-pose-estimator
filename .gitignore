@@ -3,4 +3,5 @@ CMakeFiles/
 Makefile
 cmake_install.cmake
 head_pose_estimation
+head_pose_estimation_demo
 demo/head_pose_estimation_demo.dir/
