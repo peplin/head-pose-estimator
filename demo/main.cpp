@@ -671,6 +671,12 @@ int main(int argc, char* argv[])
 	initialize();
 
 	// initialize GLUT
+    {
+        /* Check glx version, we requires version 1.3 or later */
+        int major, minor;
+        glXQueryVersion(dpy, &major, &minor);
+        printf("GL version is %d.%d\n", major, minor);
+    }
 	glutInitWindowSize(800, 800);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInit(&argc, argv);
