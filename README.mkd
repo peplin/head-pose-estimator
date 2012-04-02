@@ -80,6 +80,19 @@ Extract the `.tar.bz2` file that you've downloaded and install it:
     $ cd OpenNI-Bin-Dev-Linux-x64-v1.5.2.23/
     $ sudo ./install.sh
 
+If you get an "illegal instruction" error, it most likely means the CPU you are
+using doesn't support the SSE3 instruction set. You need to build OpenNI from
+source:
+
+    $ sudo apt-get install default-jdk
+    $ git clone https://github.com/OpenNI/OpenNI
+    $ cd OpenNI/Platform/Linux/Build
+    $ chmod a+x ../CreateRedist/install.sh
+    $ chmod a+x ../CreateRedist/RedistMaker
+    $ SSE_GENERATION=2 sudo -E make install
+    $ cd ../Redist/OpenNI-Bin*
+    $ sudo ./install.sh
+
 ### OpenNI SensorKinect
 
 Clone and install the Kinect sensor module for OpenNI:
@@ -88,6 +101,22 @@ Clone and install the Kinect sensor module for OpenNI:
     $ cd SensorKinect/Bin
     $ tar -xjf SensorKinect091-Bin-Linux64-v5.1.0.25.tar.bz2
     $ cd Sensor-Bin-Linux-x64-v5.1.0.25
+    $ sudo ./install.sh
+
+If you get an "illegal instruction" error, it most likely means the CPU you are
+using doesn't support the SSE3 instruction set. You need to build the sensor
+module from source, too:
+
+    $ cd SensorKinect/Platform/Linux
+    $ chmod a+x
+
+    $ git clone https://github.com/OpenNI/OpenNI
+    $ cd OpenNI/Platform/Linux
+    $ chmod a+x CreateRedist/install.sh
+    $ chmod a+x CreateRedist/RedistMaker
+    $ cd Build
+    $ SSE_GENERATION=2 sudo -E make install
+    $ cd ../Redist/Sensor-Bin*
     $ sudo ./install.sh
 
 ### USB Device Setup
